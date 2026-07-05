@@ -1,0 +1,5 @@
+To create migrations: (python3 manage.py makemigrations)
+    -> alembic revision --autogenerate -m "add user_id to tasks"
+
+To migrate:(python3 manage.py migrate)
+    -> alembic upgrade head

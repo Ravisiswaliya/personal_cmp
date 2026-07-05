@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Invoice</title>
+    </head>
+
+    <body
+        style="
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 30px;
+        "
+    >
+        <table width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <td align="center">
+                    <table
+                        width="650"
+                        cellspacing="0"
+                        cellpadding="30"
+                        style="background: #ffffff; border-radius: 8px"
+                    >
+                        <tr>
+                            <td>
+                                <h2 style="color: #1f2937">Invoice</h2>
+
+                                <p>
+                                    Dear <strong>{{ customer_name }}</strong>,
+                                </p>
+
+                                <p>Please find attached your invoice.</p>
+
+                                <table
+                                    width="100%"
+                                    cellpadding="8"
+                                    style="border-collapse: collapse"
+                                >
+                                    <tr>
+                                        <td><strong>Invoice Number</strong></td>
+                                        <td>{{ invoice_number }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>Invoice Date</strong></td>
+                                        <td>{{ invoice_date }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>Due Date</strong></td>
+                                        <td>{{ due_date }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>Amount</strong></td>
+                                        <td>{{ currency }} {{ amount }}</td>
+                                    </tr>
+                                </table>
+
+                                <br />
+
+                                <p>
+                                    Kindly process the payment before the due
+                                    date.
+                                </p>
+
+                                <p>
+                                    If you have any questions, please reply to
+                                    this email.
+                                </p>
+
+                                <br />
+
+                                <p>
+                                    Regards,<br />
+
+                                    <strong>{{ company_name }}</strong><br />
+
+                                    {{ sender_name }}
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

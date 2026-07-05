@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Quotation</title>
+    </head>
+
+    <body style="font-family: Arial; background: #f7f7f7; padding: 30px">
+        <table
+            width="650"
+            align="center"
+            cellpadding="30"
+            style="background: white; border-radius: 8px"
+        >
+            <tr>
+                <td>
+                    <h2>Quotation</h2>
+
+                    <p>Dear <strong>{{ customer_name }}</strong>,</p>
+
+                    <p>Thank you for your interest in our services.</p>
+
+                    <p>Please find attached our quotation.</p>
+
+                    <table width="100%" cellpadding="8">
+                        <tr>
+                            <td><b>Quotation Number</b></td>
+
+                            <td>{{ quotation_number }}</td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Date</b></td>
+
+                            <td>{{ quotation_date }}</td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Valid Until</b></td>
+
+                            <td>{{ valid_until }}</td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Estimated Amount</b></td>
+
+                            <td>{{ currency }} {{ amount }}</td>
+                        </tr>
+                    </table>
+
+                    <br />
+
+                    <p>We look forward to working with you.</p>
+
+                    <br />
+
+                    Regards,
+
+                    <br />
+
+                    <strong>{{ company_name }}</strong>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

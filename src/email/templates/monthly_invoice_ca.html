@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Monthly Invoice Submission</title>
+    </head>
+
+    <body style="font-family: Arial; background: #f4f4f4; padding: 30px">
+        <table
+            width="650"
+            align="center"
+            cellpadding="30"
+            style="background: white; border-radius: 8px"
+        >
+            <tr>
+                <td>
+                    <h2>Monthly Invoice Submission</h2>
+
+                    <p>Dear <strong>{{ ca_name }}</strong>,</p>
+
+                    <p>
+                        Please find attached all invoices for
+                        <strong>{{ month }} {{ year }}</strong>.
+                    </p>
+
+                    <p>
+                        Kindly review the attached documents for bookkeeping,
+                        GST filing and accounting purposes.
+                    </p>
+
+                    <ul>
+                        <li>Sales Invoices</li>
+
+                        <li>Purchase Invoices (if applicable)</li>
+
+                        <li>Supporting Documents</li>
+                    </ul>
+
+                    <p>
+                        Please let me know if any additional documents are
+                        required.
+                    </p>
+
+                    <br />
+
+                    Regards,
+
+                    <br />
+
+                    <strong>{{ company_name }}</strong>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
