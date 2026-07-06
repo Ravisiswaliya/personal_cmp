@@ -12,22 +12,19 @@ email_routes = APIRouter(prefix="/email", tags=["Email"])
 
 
 @email_routes.post(
-    "/send",
+    "/send-simple-email",
     status_code=status.HTTP_201_CREATED,
 )
-async def send_simple_email(body: SendInvoiceEmailSchema):
-    html = render_template(
-        "invoice.html",
-        body.invoice.model_dump(mode="json"),
-    )
+async def send_simple_email(
+    body: SendInvoiceEmailSchema,
+    background_tasks: BackgroundTasks,
+):
+    email_data = body.invoice.model_dump()
+    html = render_template("invoice.html", email_data)
 
-    await send_email(
-        emails=body.recipients,
-        cc=body.cc,
-        bcc=body.bcc,
-        subject=body.subject,
-        html_content=html,
-    )
+    background_tasks.add_task(send_email, body, html)
+
+    print("email sent")
 
     return {
         "success": True,
@@ -35,36 +32,37 @@ async def send_simple_email(body: SendInvoiceEmailSchema):
     }
 
 
-@email_routes.post(
-    "/send",
-    status_code=status.HTTP_201_CREATED,
-)
-@email_routes.post("/send")
-async def send_email(
-    background_tasks: BackgroundTasks,
-    invoice: Annotated[
-        InvoiceEmailData,
-        Depends(InvoiceEmailData.as_form),
-    ],
-    subject: str = Form(...),
-    recipients: list[EmailStr] = Form(...),
-    cc: list[EmailStr] = Form([]),
-    bcc: list[EmailStr] = Form([]),
-    attachments: list[UploadFile] = File([]),
-):
-    html = render_template(
-        "invoice.html",
-        invoice.model_dump(mode="json"),
-    )
+# @email_routes.post(
+#     "/send",
+#     status_code=status.HTTP_201_CREATED,
+# )
+# @email_routes.post("/send")
+# async def send_email(
+#     background_tasks: BackgroundTasks,
+#     invoice: Annotated[
+#         InvoiceEmailData,
+#         Depends(InvoiceEmailData.as_form),
+#     ],
+#     subject: str = Form(...),
+#     recipients: list[EmailStr] = Form(...),
+#     cc: list[EmailStr] = Form([]),
+#     bcc: list[EmailStr] = Form([]),
+#     attachments: list[UploadFile] = File([]),
+# ):
+#     html = render_template(
+#         "invoice.html",
+#         invoice.model_dump(mode="json"),
+#     )
 
-    await send_email(
-        emails=recipients,
-        cc=cc,
-        bcc=bcc,
-        subject=subject,
-        html_content=html,
-        attachments=attachments,
-        background_tasks=background_tasks,
-    )
+#     email_res = await send_email(
+#         emails=recipients,
+#         cc=cc,
+#         bcc=bcc,
+#         subject=subject,
+#         html_content=html,
+#         attachments=attachments,
+#     )
 
-    return {"success": True}
+#     background_tasks.add_task(email_res)
+
+#     return {"success": True}
