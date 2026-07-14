@@ -5,9 +5,9 @@ import jwt
 from fastapi import Depends, HTTPException, Request
 from sqlalchemy.orm.session import Session
 
-from src.user.models import User
-from src.utils.db import get_db
-from src.utils.settings import settings
+from app.src.user.models import User
+from app.src.utils.db import get_db
+from app.src.utils.settings import settings
 
 
 def is_authenticated(request: Request, db: Session = Depends(get_db)):

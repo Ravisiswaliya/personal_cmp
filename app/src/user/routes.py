@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, Request, status
 from sqlalchemy.orm.session import Session
 
-from src.user import controller
-from src.user.schema import UserCreateSchema, UserLoginSchema, UserResponseSchema
-from src.utils.db import get_db
-from src.utils.helpers import is_authenticated
+from app.src.user import controller
+from app.src.user.schema import UserCreateSchema, UserLoginSchema, UserResponseSchema
+from app.src.utils.db import get_db
+from app.src.utils.helpers import is_authenticated
 
-user_routes = APIRouter(prefix="/user")
+user_routes = APIRouter(prefix="/user", tags=["Auth"])
 
 
 @user_routes.post(

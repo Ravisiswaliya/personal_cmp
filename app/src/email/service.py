@@ -7,8 +7,8 @@ from fastapi_mail import (
 )
 from pydantic import EmailStr
 
-from src.email.schema import EmailEnvelope, InvoiceEmailData, SendInvoiceEmailSchema
-from src.utils.settings import settings
+from app.src.email.schema import EmailEnvelope, InvoiceEmailData, SendInvoiceEmailSchema
+from app.src.utils.settings import settings
 
 conf = ConnectionConfig(
     MAIL_USERNAME=settings.GMAIL_USERNAME,

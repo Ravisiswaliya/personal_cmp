@@ -4,9 +4,10 @@ from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, UploadFile,
 from pydantic.networks import EmailStr
 from starlette import status
 
-from src.email.helper import render_template
-from src.email.schema import InvoiceEmailData, SendInvoiceEmailSchema
-from src.email.service import send_email
+from app.src.core.celery_tasks import add
+from app.src.email.helper import render_template
+from app.src.email.schema import InvoiceEmailData, SendInvoiceEmailSchema
+from app.src.email.service import send_email
 
 email_routes = APIRouter(prefix="/email", tags=["Email"])
 
@@ -30,6 +31,17 @@ async def send_simple_email(
         "success": True,
         "message": "Invoice email sent successfully",
     }
+
+
+@email_routes.get("/test-celery-task")
+def test_celery_task():
+    task = add.delay(10, 20)
+    return {"task_id": task.id, "status": "Task submitted"}
+
+
+# @email_routes.post("/send_invoice", status_code=status.HTTP_200_OK)
+# async def send_invoice_email(body):
+#     pass
 
 
 # @email_routes.post(
