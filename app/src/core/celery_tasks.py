@@ -3,6 +3,7 @@ import time
 from app.src.core.celery_app import celery
 
 
+# just for testing
 @celery.task(
     retry_backoff=True,
 )
@@ -23,5 +24,5 @@ def add(x: int, y: int):
     retry_kwargs={"max_retries": 5},
 )
 def process_monthly_invoice_report(self, invoice_month: int):
-    # Perform your business logic here
+    # Add your business logic here
     return f"Processed order {invoice_month}"
