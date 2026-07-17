@@ -3,9 +3,9 @@ from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.session import Session
 
-from src.user.auth import create_access_token, get_password_hash, verify_password
-from src.user.models import User
-from src.user.schema import UserCreateSchema, UserLoginSchema
+from app.src.user.auth import create_access_token, get_password_hash, verify_password
+from app.src.user.models import User
+from app.src.user.schema import UserCreateSchema, UserLoginSchema
 
 
 def login_user(body: UserLoginSchema, db: Session):

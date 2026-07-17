@@ -3,13 +3,13 @@ from typing import List
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm.session import Session
 
-from src.tasks import controller
-from src.tasks.schema import TaskCreateSchema, TaskResponseSchema, TaskUpdateSchema
-from src.user.models import User
-from src.utils.db import get_db
-from src.utils.helpers import is_authenticated
+from app.src.tasks import controller
+from app.src.tasks.schema import TaskCreateSchema, TaskResponseSchema, TaskUpdateSchema
+from app.src.user.models import User
+from app.src.utils.db import get_db
+from app.src.utils.helpers import is_authenticated
 
-task_routes = APIRouter(prefix="/tasks")
+task_routes = APIRouter(prefix="/tasks", tags=["Task"])
 
 
 @task_routes.post(

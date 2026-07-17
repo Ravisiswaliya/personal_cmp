@@ -42,6 +42,104 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis-local
+    restart: unless-stopped
+    command: >
+      redis-server
+      --appendonly yes
+      --save 60 1000
+
+    volumes:
+      - redis_data:/data
+
+  api:
+    build: .
+
+    container_name: fastapi
+
+    restart: unless-stopped
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+    env_file:
+      - .env
+
+    command: >
+      uvicorn app.main:app
+      --host 0.0.0.0
+      --port 8000
+      --reload
+
+  worker:
+    build: .
+
+    container_name: celery-worker
+
+    restart: unless-stopped
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+    env_file:
+      - .env
+
+    command: >
+      celery
+      -A app.src.core.celery_app
+      worker
+      -l info
+
+  beat:
+    build: .
+    container_name: celery-beat
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_started
+
+    env_file:
+      - .env
+
+    command: >
+      celery
+      -A app.src.core.celery_app
+      beat
+      -l info
+
+  flower:
+    image: mher/flower
+
+    container_name: flower
+
+    restart: unless-stopped
+
+    command: >
+      celery
+      --broker=redis://redis:6379/0
+      flower
+
+    ports:
+      - "5555:5555"
+
+    depends_on:
+      redis:
+        condition: service_started
+
+  # celery worker service
+
 volumes:
   postgres_data:
   pgadmin_data:
+  redis_data:

@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 
 # from src.tasks.models import TaskModel
-from src.email.routes import email_routes
-from src.tasks.router import task_routes
-from src.user.routes import user_routes
-from src.utils.db import Base, engine
+from app.src.email.routes import email_routes
+from app.src.tasks.router import task_routes
+from app.src.user.routes import user_routes
+from app.src.utils.db import Base, engine
 
 Base.metadata.create_all(engine)
 

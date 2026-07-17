@@ -48,3 +48,8 @@ class EmailEnvelope(BaseModel):
 
 class SendInvoiceEmailSchema(EmailEnvelope):
     invoice: InvoiceEmailData
+
+
+# to be tested with celery
+class SendLargerFile(BaseModel):
+    pass

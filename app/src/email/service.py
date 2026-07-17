@@ -1,4 +1,4 @@
-from fastapi import BackgroundTasks, HTTPException, UploadFile
+from fastapi import HTTPException, UploadFile
 from fastapi_mail import (
     ConnectionConfig,
     FastMail,
@@ -7,7 +7,8 @@ from fastapi_mail import (
 )
 from pydantic import EmailStr
 
-from src.utils.settings import settings
+from app.src.email.schema import EmailEnvelope, InvoiceEmailData, SendInvoiceEmailSchema
+from app.src.utils.settings import settings
 
 conf = ConnectionConfig(
     MAIL_USERNAME=settings.GMAIL_USERNAME,
@@ -26,13 +27,36 @@ fm = FastMail(conf)
 
 
 async def send_email(
+    body: EmailEnvelope,
+    html_content: str,
+) -> None:
+    message = MessageSchema(
+        subject=body.subject,
+        recipients=[str(email) for email in body.recipients],
+        cc=[str(email) for email in body.cc],
+        bcc=[str(email) for email in body.bcc],
+        body=html_content,
+        subtype=MessageType.html,
+    )
+
+    try:
+        await fm.send_message(message)
+        print("Email send successfully ++++++++++++++++++++++")
+
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to send email: {exc}",
+        )
+
+
+async def send_email_with_attachment(
     emails: list[EmailStr],
     subject: str,
     html_content: str,
     cc: list[EmailStr] | None = None,
     bcc: list[EmailStr] | None = None,
     attachments: list[UploadFile] | None = None,
-    background_tasks: BackgroundTasks | None = None,
 ):
     message = MessageSchema(
         subject=subject,
@@ -45,13 +69,7 @@ async def send_email(
     )
 
     try:
-        if background_tasks:
-            background_tasks.add_task(
-                fm.send_message,
-                message,
-            )
-        else:
-            await fm.send_message(message)
+        await fm.send_message(message)
 
     except Exception as e:
         raise HTTPException(

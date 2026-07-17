@@ -7,8 +7,8 @@ from jwt.exceptions import InvalidTokenError
 from pwdlib import PasswordHash
 from sqlalchemy.orm.session import Session
 
-from src.user.models import User
-from src.utils.settings import settings
+from app.src.user.models import User
+from app.src.utils.settings import settings
 
 password_hash = PasswordHash.recommended()
 

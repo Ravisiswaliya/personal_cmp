@@ -1,3 +1,11 @@
+TO DO:
+    -> Create Party Module
+    -> Create Invoice/Quotation Module where we can generate invoice from quotation as well
+    -> Send Inovice to email & Telegram using Celery
+
+
+
+
 To create migrations: (python3 manage.py makemigrations)
     -> alembic revision --autogenerate -m "add user_id to tasks"
 

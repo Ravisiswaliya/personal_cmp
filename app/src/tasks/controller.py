@@ -2,9 +2,9 @@ from fastapi.exceptions import HTTPException
 from sqlalchemy import desc
 from sqlalchemy.orm.session import Session
 
-from src.tasks.models import TaskModel
-from src.tasks.schema import TaskCreateSchema, TaskUpdateSchema
-from src.user.models import User
+from app.src.tasks.models import TaskModel
+from app.src.tasks.schema import TaskCreateSchema, TaskUpdateSchema
+from app.src.user.models import User
 
 
 def create_task(body: TaskCreateSchema, db: Session, user: User):
