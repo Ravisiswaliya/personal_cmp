@@ -1,4 +1,8 @@
+from sys import prefix
+
 from fastapi import FastAPI
+
+from app.src.client.routes import client_routes
 
 # from src.tasks.models import TaskModel
 from app.src.email.routes import email_routes
@@ -13,6 +17,7 @@ app = FastAPI(title="Getmax billing system")
 app.include_router(task_routes, prefix="/api/v1")
 app.include_router(user_routes, prefix="/api/v1")
 app.include_router(email_routes, prefix="/api/v1")
+app.include_router(client_routes, prefix="/api/v1")
 
 
 @app.get("/")
